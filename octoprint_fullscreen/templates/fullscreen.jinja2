@@ -1,4 +1,4 @@
-<div id="fullscreen-bar" data-bind="visible: loginState.isUser">
+<div id="fullscreen-bar">
 
 	<!-- ko allowBindings: false -->
 		<div id="fullscreen-info">
@@ -20,7 +20,10 @@
 			<div class="progress" id="fullscreen_progressBar">
 				<div class="bar" data-bind="style: { width: progressString() + '%' }"></div>
 			</div>
+			
 			<button class="btn" id="fullscreen-toggle" data-bind="click: fullscreen"><i class="icon-resize-full" aria-hidden="true" data-bind="css: { 'icon-resize-small': isFullscreen(), 'icon-resize-full': !isFullscreen() }"></i></button>
+			<div class="user-buttons" data-bind="visible: loginState.isUser">
+			</div>
 		</div>
 	<!-- /ko -->
 

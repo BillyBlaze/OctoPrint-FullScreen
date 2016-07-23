@@ -40,7 +40,7 @@ $(function() {
 		});
 		
 		$info.insertAfter($webcam);
-		$("#job_pause").clone().appendTo("#fullscreen-cancel");
+		$("#job_pause").clone().appendTo(".user-buttons");
 		
 		ko.applyBindings(self.printer, document.getElementById("fullscreen-cancel"))
     }
