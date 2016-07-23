@@ -44,3 +44,15 @@ img.fullscreen + #fullscreen-bar {
 	bottom: 0;
 	margin: 0;
 }
+.inlineFullscreen {
+	overflow: hidden;
+}
+.inlineFullscreen #webcam_image {
+	z-index: 9998;
+}
+.inlineFullscreen #fullscreen-bar {
+	z-index: 9999;
+}
+.inlineFullscreen #webcam_container {
+	position: static;
+}

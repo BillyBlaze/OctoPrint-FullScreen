@@ -8,25 +8,38 @@
 $(function() {
     function FullscreenViewModel(parameters) {
         var self = this;
-		var webcam = $('#webcam_image');
-		var info = $('#fullscreen-bar');
+		var $webcam = $('#webcam_image');
+		var $container = $('#webcam_rotator');
+		var $info = $('#fullscreen-bar');
+		var $body = $('body');
 		
         self.tempModel = parameters[0];
 		self.printer = parameters[2];
         self.settings = parameters[1];
+		
+		self.printer.isFullscreen = ko.observable(false);
+		self.printer.fullscreen = function() {
+			$container.toggleFullScreen();
+		}
 
-		webcam.on("dblclick", function() {
-			$('#webcam_rotator').toggleFullScreen();
-			webcam.toggleClass("fullscreen");
+		$webcam.on("dblclick", function() {
+			$body.toggleClass('inlineFullscreen');
+			$webcam.toggleClass("inline fullscreen");
+			
+			if(self.printer.isFullscreen()) {
+				$container.toggleFullScreen();
+			}
 		});
 		
 		$(document).bind("fullscreenchange", function() {
 			if (!$(document).fullScreen()) {
-				webcam.removeClass("fullscreen");
+				self.printer.isFullscreen(false);
+			} else {
+				self.printer.isFullscreen(true);
 			}
 		});
 		
-		info.insertAfter(webcam);
+		$info.insertAfter($webcam);
 		$("#job_pause").clone().appendTo("#fullscreen-cancel");
 		
 		ko.applyBindings(self.printer, document.getElementById("fullscreen-cancel"))
