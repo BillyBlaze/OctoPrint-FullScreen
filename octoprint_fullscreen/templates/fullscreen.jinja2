@@ -1,0 +1,27 @@
+<div id="fullscreen-bar" data-bind="visible: loginState.isUser">
+
+	<!-- ko allowBindings: false -->
+		<div id="fullscreen-info">
+			<div class="temp">
+				<!-- ko foreach: tempModel.tools -->
+				<p data-bind="template: { name: 'tempTemplate' }"></p>
+				<!-- /ko -->
+				<p data-bind="template: { name: 'tempTemplate', data: tempModel.bedTemp }, visible: tempModel.hasBed"></p>
+			</div>
+		</div>
+	<!-- /ko -->
+	
+	<!-- ko allowBindings: false -->
+		<div id="fullscreen-cancel">
+			<div class="estimated">
+				<p>{{ _('Print Time') }}: <strong data-bind="text: printTimeString"></strong></p>
+				<p>{{ _('Print Time Left') }}: <strong data-bind="text: printTimeLeftString"></strong></p>
+			</div>
+		</div>
+	<!-- /ko -->
+
+</div>
+
+<script type="text/html" id="tempTemplate">
+    <span data-bind="html: formatBarTemperature(name(), actual(), target())"></span>
+</script>

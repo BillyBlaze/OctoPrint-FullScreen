@@ -16,6 +16,13 @@ class FullscreenPlugin(octoprint.plugin.SettingsPlugin,
 			less=[]
 		)
 
+	def get_template_configs(self):
+		files = [
+			dict(type="generic", template="fullscreen.jinja2", custom_bindings=True)
+		]
+
+		return files
+
 
 	def get_update_information(self):
 		return dict(

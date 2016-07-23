@@ -1,5 +1,38 @@
 img.fullscreen {
 	position: absolute;
 	top: 0;
+	left: 0;
 	width: 100%;
+}
+img.fullscreen + #fullscreen-bar {
+	display: block;
+}
+#fullscreen-bar {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,.5);
+	font-size: 85%;
+	color: #fff;
+	padding: 10px 20px;
+}
+#fullscreen-bar * {
+	display: inline-block;
+}
+#fullscreen-cancel,
+#fullscreen-cancel button {
+	float: right;
+}
+#fullscreen-cancel button {
+	width: auto;
+	margin: 0 0 0 10px;
+}
+#fullscreen-cancel p,
+#fullscreen-info .temp p {
+	line-height: 33px;
+	margin: 0 10px 0 0;
+}
+#fullscreen-info .temp p {
 }
