@@ -31,7 +31,7 @@ img.fullscreen + #fullscreen-bar {
 }
 #fullscreen-cancel p,
 #fullscreen-info .temp p {
-	line-height: 33px;
+	line-height: 30px;
 	margin: 0 10px 0 0;
 }
 #fullscreen_progressBar {

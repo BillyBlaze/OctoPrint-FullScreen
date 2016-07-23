@@ -1,6 +1,6 @@
 # OctoPrint-Fullscreen
 
-**TODO:** Describe what your plugin does.
+This plugin will allow you to open the webcam feed in fullscreen mode by double clicking the image. It will show a bar at the bottom of the image with information about print time, remaining time, temperatures and a pause button.
 
 ## Setup
 
@@ -9,9 +9,8 @@ or manually using this URL:
 
     https://github.com/BillyBlaze/OctoPrint-FullScreen/archive/master.zip
 
-**TODO:** Describe how to install your plugin, if more needs to be done than just installing it via pip or through
-the plugin manager.
 
-## Configuration
-
-**TODO:** Describe your plugin's configuration options (if any).
+## Support browsers (tested)
+- IE Edge
+- Firefox
+- Chrome
