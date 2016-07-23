@@ -16,7 +16,7 @@ img.fullscreen + #fullscreen-bar {
 	background: rgba(0,0,0,.5);
 	font-size: 85%;
 	color: #fff;
-	padding: 10px 20px;
+	padding: 10px 20px 10px;
 }
 #fullscreen-bar * {
 	display: inline-block;
@@ -34,5 +34,13 @@ img.fullscreen + #fullscreen-bar {
 	line-height: 33px;
 	margin: 0 10px 0 0;
 }
-#fullscreen-info .temp p {
+#fullscreen_progressBar {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	height: 5px;
+	border-radius: 0;
+	background: transparent;
+	bottom: 0;
+	margin: 0;
 }

@@ -17,6 +17,9 @@
 				<p>{{ _('Print Time') }}: <strong data-bind="text: printTimeString"></strong></p>
 				<p>{{ _('Print Time Left') }}: <strong data-bind="text: printTimeLeftString"></strong></p>
 			</div>
+			<div class="progress" id="fullscreen_progressBar">
+				<div class="bar" data-bind="style: { width: progressString() + '%' }"></div>
+			</div>
 		</div>
 	<!-- /ko -->
 
