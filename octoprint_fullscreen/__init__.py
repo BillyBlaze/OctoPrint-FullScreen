@@ -7,7 +7,7 @@ class FullscreenPlugin(octoprint.plugin.SettingsPlugin,
                        octoprint.plugin.TemplatePlugin):
 
 	def get_settings_defaults(self):
-		return dict()
+		return dict(max_height=False)
 
 	def get_assets(self):
 		return dict(
@@ -18,7 +18,8 @@ class FullscreenPlugin(octoprint.plugin.SettingsPlugin,
 
 	def get_template_configs(self):
 		files = [
-			dict(type="generic", template="fullscreen.jinja2", custom_bindings=True)
+			dict(type="generic", template="fullscreen.jinja2", custom_bindings=True),
+			dict(type="settings",custom_bindings=False)
 		]
 
 		return files

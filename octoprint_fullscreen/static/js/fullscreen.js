@@ -25,6 +25,10 @@ $(function() {
 		$webcam.on("dblclick", function() {
 			$body.toggleClass('inlineFullscreen');
 			$webcam.toggleClass("inline fullscreen");
+
+			if(self.settings.settings.plugins.fullscreen.max_height()) {
+				$webcam.toggleClass("fullscreen_maxheight");
+			}
 			
 			if(self.printer.isFullscreen()) {
 				$container.toggleFullScreen();

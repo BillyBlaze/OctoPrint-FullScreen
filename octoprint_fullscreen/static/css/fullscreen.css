@@ -4,6 +4,17 @@ img.fullscreen {
 	left: 0;
 	width: 100%;
 }
+img.fullscreen_maxheight {
+	outline: 100em solid black;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	height: 100%;
+	width: auto;
+}
 img.fullscreen + #fullscreen-bar {
 	display: block;
 }
