@@ -10,6 +10,7 @@ $(function() {
 		var self = this;
 		var $webcam = $('#webcam_image');
 		var $container = $('#webcam_rotator');
+		var $fullscreenContainer = $("#webcam_container");
 		var $info = $('#fullscreen-bar');
 		var $body = $('body');
 		
@@ -19,15 +20,15 @@ $(function() {
 		
 		self.printer.isFullscreen = ko.observable(false);
 		self.printer.fullscreen = function() {
-			$container.toggleFullScreen();
+			$fullscreenContainer.toggleFullScreen();
 		}
 
 		$webcam.on("dblclick", function() {
 			$body.toggleClass('inlineFullscreen');
-			$webcam.toggleClass("inline fullscreen");
+			$container.toggleClass("inline fullscreen");
 			
 			if(self.printer.isFullscreen()) {
-				$container.toggleFullScreen();
+				$fullscreenContainer.toggleFullScreen();
 			}
 		});
 		
@@ -39,7 +40,7 @@ $(function() {
 			}
 		});
 		
-		$info.insertAfter($webcam);
+		$info.insertAfter($container);
 		$("#job_pause").clone().appendTo(".user-buttons");
 		
 		ko.applyBindings(self.printer, document.getElementById("fullscreen-cancel"))
@@ -52,7 +53,7 @@ $(function() {
 	]);
 });
 
-function formatBarTemperature(toolName, actual, target) {
+function formatBarTemperatureFullscreen(toolName, actual, target) {
 	var output = toolName + ": " + _.sprintf("%.1f&deg;C", actual);
 
 	if (target) {

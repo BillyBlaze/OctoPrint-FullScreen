@@ -1,10 +1,73 @@
-img.fullscreen {
+.fullscreen {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
+	height: 100%;
+	background: black;
+	z-index: 99;
+
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	-ms-flex-direction: row;
+	flex-direction: row;
+	-webkit-flex-wrap: nowrap;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-align-content: center;
+	-ms-flex-line-pack: center;
+	align-content: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
 }
-img.fullscreen + #fullscreen-bar {
+.fullscreen img {
+	width: 100%;
+	height: auto;
+	object-fit: contain;
+	display: block;
+	max-height: 100%;
+	max-width: 100%;
+}
+_:-ms-lang(x), _:-webkit-full-screen, .fullscreen img {
+	width: auto;
+	height: 100%;
+}
+.fullscreen.rotate90 {
+	-webkit-transform: none;
+	transform: none;
+}
+.fullscreen.rotate90 img {
+	-webkit-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	width: 100vh;
+}
+.fullscreen.rotate90 img.flipH {
+	-webkit-transform: rotate(-90deg) scaleX(-1);
+	-moz-transform: rotate(-90deg) scaleX(-1);
+	-ms-transform: rotate(-90deg) scaleX(-1);
+	transform: rotate(-90deg) scaleX(-1);
+	width: 100vh;
+}
+.fullscreen.rotate90 img.flipV {
+	-webkit-transform: rotate(-90deg) scaleY(-1);
+	-moz-transform: rotate(-90deg) scaleY(-1);
+	-ms-transform: rotate(-90deg) scaleY(-1);
+	transform: rotate(-90deg) scaleY(-1);
+	width: 100vh;
+}
+.fullscreen.rotate90 img.flipV.flipH {
+	-webkit-transform: rotate(-90deg) scaleY(-1) scaleX(-1);
+	-moz-transform: rotate(-90deg) scaleY(-1) scaleX(-1);
+	-ms-transform: rotate(-90deg) scaleY(-1) scaleX(-1);
+	transform: rotate(-90deg) scaleY(-1) scaleX(-1);
+	width: 100vh;
+}
+.fullscreen + #fullscreen-bar {
 	display: block;
 }
 #fullscreen-bar {
