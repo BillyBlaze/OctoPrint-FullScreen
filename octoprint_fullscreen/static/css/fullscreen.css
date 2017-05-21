@@ -151,6 +151,9 @@ _:-ms-lang(x), _:-webkit-full-screen, .fullscreen img {
 .inlineFullscreen #webcam_container {
 	position: static;
 }
+.inlineFullscreen .webcam_fixed_ratio_inner {
+	height: 100vh !important;
+}
 .inlineFullscreen #webcam_rotator {
 	width: 100vw;
 	height: 100vh !important;
