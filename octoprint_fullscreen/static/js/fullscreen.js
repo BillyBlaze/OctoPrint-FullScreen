@@ -8,11 +8,18 @@
 $(function() {
 	function FullscreenViewModel(parameters) {
 		var self = this;
+		var $container, $fullscreenContainer;
 		var $webcam = $('#webcam_image');
-		var $container = $('#webcam_rotator');
-		var $fullscreenContainer = $("#webcam_container");
 		var $info = $('#fullscreen-bar');
 		var $body = $('body');
+		
+		if($(".webcam_fixed_ratio").length > 0) {
+			$container = $('.webcam_fixed_ratio');
+			$fullscreenContainer = $("#webcam_rotator");
+		} else {
+			$container = $('#webcam_rotator');
+			$fullscreenContainer = $("#webcam_container");
+		}
 		
 		self.tempModel = parameters[0];
 		self.printer = parameters[2];
