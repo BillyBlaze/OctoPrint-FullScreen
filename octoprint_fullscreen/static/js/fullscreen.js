@@ -28,7 +28,18 @@ $(function() {
 		self.printer.isFullscreen = ko.observable(false);
 		self.printer.fullscreen = function() {
 			$fullscreenContainer.toggleFullScreen();
-		}
+		};
+
+		self.formatBarTemperatureFullscreen = function(toolName, actual, target) {
+			var output = toolName + ": " + _.sprintf("%.1f&deg;C", actual);
+
+			if (target) {
+				var sign = (target >= actual) ? " \u21D7 " : " \u21D8 ";
+				output += sign + _.sprintf("%.1f&deg;C", target);
+			}
+
+			return output;
+		};
 
 		$webcam.on("dblclick", function() {
 			$body.toggleClass('inlineFullscreen');
@@ -59,14 +70,3 @@ $(function() {
 		["#fullscreen-info"]
 	]);
 });
-
-function formatBarTemperatureFullscreen(toolName, actual, target) {
-	var output = toolName + ": " + _.sprintf("%.1f&deg;C", actual);
-
-	if (target) {
-		var sign = (target >= actual) ? " \u21D7 " : " \u21D8 ";
-		output += sign + _.sprintf("%.1f&deg;C", target);
-	}
-
-	return output;
-};
