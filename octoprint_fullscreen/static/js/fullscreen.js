@@ -41,12 +41,23 @@ $(function() {
 			return output;
 		};
 
-		$webcam.on("dblclick", function() {
-			$body.toggleClass('inlineFullscreen');
-			$container.toggleClass("inline fullscreen");
-			
-			if(self.printer.isFullscreen()) {
-				$fullscreenContainer.toggleFullScreen();
+
+		var touchtime = 0;
+		$webcam.on("click", function() {
+			if (touchtime == 0) {
+				touchtime = new Date().getTime();
+			} else {
+				if (((new Date().getTime()) - touchtime) < 800) {
+					$body.toggleClass('inlineFullscreen');
+					$container.toggleClass("inline fullscreen");
+					
+					if(self.printer.isFullscreen()) {
+						$fullscreenContainer.toggleFullScreen();
+					}
+					touchtime = 0;
+				} else {
+					touchtime = new Date().getTime();
+				}
 			}
 		});
 		
