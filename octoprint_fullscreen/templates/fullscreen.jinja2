@@ -1,31 +1,39 @@
 <div id="fullscreen-bar">
 
 	<!-- ko allowBindings: false -->
-		<div id="fullscreen-info">
-			<div class="temp">
-				<!-- ko foreach: tempModel.tools -->
-				<p data-bind="template: { name: 'tempFullscreenTemplate' }"></p>
-				<!-- /ko -->
-				<p data-bind="template: { name: 'tempFullscreenTemplate', data: tempModel.bedTemp }, visible: tempModel.hasBed"></p>
-			</div>
+	<div id="fullscreen-tool-info">
+		<div class="temp">
+			<!-- ko foreach: tempModel.tools -->
+			<p data-bind="template: { name: 'tempFullscreenTemplate' }"></p>
+			<!-- /ko -->
+			<p data-bind="template: { name: 'tempFullscreenTemplate', data: tempModel.bedTemp }, visible: tempModel.hasBed"></p>
 		</div>
+	</div>
+	<!-- /ko -->
+
+
+	<!-- ko allowBindings: false -->
+	<div id="fullscreen-print-info">
+		<div class="estimated">
+			<p><span>{{ _('Print Time') }}: <span data-bind="text: printTimeString"></span></span></p>
+			<p><span>{{ _('Print Time Left') }}: <span data-bind="text: printTimeLeftString"></span></span></p>
+			<p data-bind="visible: fsp.hasLayerProgress"><span>{{ _('Layer') }}: <span data-bind="text: fsp.printLayerProgress"></span></span></p>
+		</div>
+	</div>
 	<!-- /ko -->
 
 	<!-- ko allowBindings: false -->
-		<div id="fullscreen-cancel">
-			<div class="estimated">
-				<p>{{ _('Print Time') }}: <strong data-bind="text: printTimeString"></strong></p>
-				<p>{{ _('Print Time Left') }}: <strong data-bind="text: printTimeLeftString"></strong></p>
-				<p data-bind="visible: hasLayerProgress">{{ _('Layer') }}: <strong data-bind="text: printLayerProgress"></strong></p>
-			</div>
-			<div class="progress" id="fullscreen_progressBar">
-				<div class="bar" data-bind="style: { width: progressString() + '%' }"></div>
-			</div>
-
-			<button class="btn" id="fullscreen-toggle" data-bind="click: fullscreen"><i class="icon-resize-full" aria-hidden="true" data-bind="css: { 'icon-resize-small': isFullscreen(), 'icon-resize-full': !isFullscreen() }"></i></button>
-			<div class="user-buttons" data-bind="visible: loginState.isUser">
-			</div>
+	<div id="fullscreen-buttons">
+		<div class="user-buttons" data-bind="visible: loginState.isUser">
+			<button class="btn" id="fullscreen-toggle" data-bind="click: fsp.fullscreen"><i class="icon-resize-full" aria-hidden="true" data-bind="css: { 'icon-resize-small': fsp.isFullscreen(), 'icon-resize-full': !fsp.isFullscreen() }"></i></button>
 		</div>
+	</div>
+	<!-- /ko -->
+
+	<!-- ko allowBindings: false -->
+	<div id="fullscreen-progress-bar" class="progress">
+		<div class="bar" data-bind="style: { width: progressString() + '%' }"></div>
+	</div>
 	<!-- /ko -->
 
 </div>

@@ -29,14 +29,14 @@ $(function() {
 		}
 
 		self.tempModel = parameters[0];
-		self.printer = parameters[2];
-		self.settings = parameters[1];
+		self.printer = parameters[1];
+		self.printer.fsp = {};
 
-		self.printer.printLayerProgress = ko.observable('');
-		self.printer.hasLayerProgress = ko.observable(false);
+		self.printer.fsp.printLayerProgress = ko.observable('');
+		self.printer.fsp.hasLayerProgress = ko.observable(false);
 
-		self.printer.isFullscreen = ko.observable(false);
-		self.printer.fullscreen = function() {
+		self.printer.fsp.isFullscreen = ko.observable(false);
+		self.printer.fsp.fullscreen = function() {
 			$fullscreenContainer.toggleFullScreen();
 		}
 
@@ -46,18 +46,18 @@ $(function() {
 					touchtime = new Date().getTime();
 					$webcam.trigger("click");
 					onceOpenInlineFullscreen = false;
-				}, 0);
+				}, 100);
 			}
 		}
 
 		self.onDataUpdaterPluginMessage = function (plugin, data) {
 			if (plugin.indexOf('DisplayLayerProgress') !== -1) {
-				if (!self.printer.hasLayerProgress()) {
-					self.printer.hasLayerProgress(true);
+				if (!self.printer.fsp.hasLayerProgress()) {
+					self.printer.fsp.hasLayerProgress(true);
 				}
 
 				if (data.currentLayer && data.totalLayer) {
-					self.printer.printLayerProgress(data.currentLayer + ' / ' + data.totalLayer);
+					self.printer.fsp.printLayerProgress(data.currentLayer + ' / ' + data.totalLayer);
 				}
 			}
 		};
@@ -90,7 +90,7 @@ $(function() {
 						}
 					}
 
-					if(self.printer.isFullscreen()) {
+					if(self.printer.fsp.isFullscreen()) {
 						$fullscreenContainer.toggleFullScreen();
 					}
 					touchtime = 0;
@@ -101,19 +101,21 @@ $(function() {
 		});
 
 		$(document).bind("fullscreenchange", function() {
-			self.printer.isFullscreen($(document).fullScreen());
+			self.printer.fsp.isFullscreen($(document).fullScreen());
 		});
 
 		$info.insertAfter($container);
 		$(".print-control #job_pause").clone().appendTo("#fullscreen-bar .user-buttons").attr('id', 'job_pause_clone');
 
-		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-cancel").get(0));
+		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-print-info").get(0));
+		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-buttons").get(0));
+		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-progress-bar").get(0));
 	}
 
 	OCTOPRINT_VIEWMODELS.push({
 		construct: FullscreenViewModel,
-		dependencies: ["temperatureViewModel", "settingsViewModel", "printerStateViewModel"],
+		dependencies: ["temperatureViewModel", "printerStateViewModel"],
 		optional: [],
-		elements: ["#fullscreen-info"]
+		elements: ["#fullscreen-tool-info"]
 	});
 });
