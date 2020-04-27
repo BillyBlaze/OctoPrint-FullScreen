@@ -10,17 +10,18 @@
 			</div>
 		</div>
 	<!-- /ko -->
-	
+
 	<!-- ko allowBindings: false -->
 		<div id="fullscreen-cancel">
 			<div class="estimated">
 				<p>{{ _('Print Time') }}: <strong data-bind="text: printTimeString"></strong></p>
 				<p>{{ _('Print Time Left') }}: <strong data-bind="text: printTimeLeftString"></strong></p>
+				<p data-bind="visible: hasLayerProgress">{{ _('Layer') }}: <strong data-bind="text: printLayerProgress"></strong></p>
 			</div>
 			<div class="progress" id="fullscreen_progressBar">
 				<div class="bar" data-bind="style: { width: progressString() + '%' }"></div>
 			</div>
-			
+
 			<button class="btn" id="fullscreen-toggle" data-bind="click: fullscreen"><i class="icon-resize-full" aria-hidden="true" data-bind="css: { 'icon-resize-small': isFullscreen(), 'icon-resize-full': !isFullscreen() }"></i></button>
 			<div class="user-buttons" data-bind="visible: loginState.isUser">
 			</div>

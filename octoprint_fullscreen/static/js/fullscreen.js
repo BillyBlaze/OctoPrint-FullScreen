@@ -6,30 +6,47 @@
  * License: AGPLv3
  */
 $(function() {
+	var $container, $fullscreenContainer;
+
+	if($(".webcam_fixed_ratio").length > 0) {
+		$container = $('#webcam .webcam_fixed_ratio');
+		$fullscreenContainer = $("#webcam #webcam_rotator");
+	} else {
+		$container = $('#webcam #webcam_rotator');
+		$fullscreenContainer = $("#webcam #webcam_container");
+	}
+
 	function FullscreenViewModel(parameters) {
 		var self = this;
-		var $container, $fullscreenContainer;
 		var $webcam = $('#webcam_image');
 		var $info = $('#fullscreen-bar');
 		var $body = $('body');
-		
-		if($(".webcam_fixed_ratio").length > 0) {
-			$container = $('.webcam_fixed_ratio');
-			$fullscreenContainer = $("#webcam_rotator");
-		} else {
-			$container = $('#webcam_rotator');
-			$fullscreenContainer = $("#webcam_container");
-		}
-		
+
 		self.tempModel = parameters[0];
 		self.printer = parameters[2];
 		self.settings = parameters[1];
-		
+		self.layerProgress = parameters[3];
+
+		self.printer.printLayerProgress = ko.observable('');
+		self.printer.hasLayerProgress = ko.observable(false);
+
 		self.printer.isFullscreen = ko.observable(false);
 		self.printer.fullscreen = function() {
 			$fullscreenContainer.toggleFullScreen();
 		}
-		
+
+		self.onDataUpdaterPluginMessage = function (plugin, data) {
+			if (plugin.indexOf('DisplayLayerProgress') !== -1) {
+				if (!self.printer.hasLayerProgress()) {
+					self.printer.hasLayerProgress(true);
+				}
+
+				if (data.currentLayer && data.totalLayer) {
+					self.printer.printLayerProgress(data.currentLayer + ' / ' + data.totalLayer);
+				}
+			}
+		};
+
 		self.formatBarTemperatureFullscreen = function(toolName, actual, target) {
 			var output = toolName + ": " + _.sprintf("%.1f&deg;C", actual);
 
@@ -50,7 +67,7 @@ $(function() {
 				if (((new Date().getTime()) - touchtime) < 800) {
 					$body.toggleClass('inlineFullscreen');
 					$container.toggleClass("inline fullscreen");
-					
+
 					if(self.printer.isFullscreen()) {
 						$fullscreenContainer.toggleFullScreen();
 					}
@@ -60,7 +77,7 @@ $(function() {
 				}
 			}
 		});
-		
+
 		$(document).bind("fullscreenchange", function() {
 			if (!$(document).fullScreen()) {
 				self.printer.isFullscreen(false);
@@ -68,16 +85,17 @@ $(function() {
 				self.printer.isFullscreen(true);
 			}
 		});
-		
+
 		$info.insertAfter($container);
-		$("#job_pause").clone().appendTo(".user-buttons");
-		
-		ko.applyBindings(self.printer, document.getElementById("fullscreen-cancel"))
+		$(".print-control #job_pause").clone().appendTo(".user-buttons").attr('id', 'job_pause_clone');
+
+		ko.applyBindings(self.printer, $("#webcam #fullscreen-cancel").get(0));
 	}
 
-	OCTOPRINT_VIEWMODELS.push([
-		FullscreenViewModel,
-		["temperatureViewModel", "settingsViewModel", "printerStateViewModel"],
-		["#fullscreen-info"]
-	]);
+	OCTOPRINT_VIEWMODELS.push({
+		construct: FullscreenViewModel,
+		dependencies: ["temperatureViewModel", "settingsViewModel", "printerStateViewModel"],
+		optional: [],
+		elements: ["#fullscreen-info"]
+	});
 });
