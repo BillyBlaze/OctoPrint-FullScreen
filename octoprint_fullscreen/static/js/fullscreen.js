@@ -6,26 +6,25 @@
  * License: AGPLv3
  */
 $(function() {
-	var $container, $fullscreenContainer;
-
-	if($(".webcam_fixed_ratio").length > 0) {
-		$container = $('#webcam .webcam_fixed_ratio');
-		$fullscreenContainer = $("#webcam #webcam_rotator");
-	} else {
-		$container = $('#webcam #webcam_rotator');
-		$fullscreenContainer = $("#webcam #webcam_container");
-	}
-
 	function FullscreenViewModel(parameters) {
 		var self = this;
 		var $webcam = $('#webcam_image');
 		var $info = $('#fullscreen-bar');
 		var $body = $('body');
+		var $container, $fullscreenContainer;
+
+		var containerPlaceholder = document.getElementById('webcam') ? '#webcam' : '#webcam_container';
+		if ($('.webcam_fixed_ratio').length > 0) {
+			$container = $(containerPlaceholder + ' .webcam_fixed_ratio');
+			$fullscreenContainer = $(containerPlaceholder + ' #webcam_rotator');
+		} else {
+			$container = $(containerPlaceholder + ' #webcam_rotator');
+			$fullscreenContainer = $(containerPlaceholder + ' #webcam_container');
+		}
 
 		self.tempModel = parameters[0];
 		self.printer = parameters[2];
 		self.settings = parameters[1];
-		self.layerProgress = parameters[3];
 
 		self.printer.printLayerProgress = ko.observable('');
 		self.printer.hasLayerProgress = ko.observable(false);
@@ -89,7 +88,7 @@ $(function() {
 		$info.insertAfter($container);
 		$(".print-control #job_pause").clone().appendTo(".user-buttons").attr('id', 'job_pause_clone');
 
-		ko.applyBindings(self.printer, $("#webcam #fullscreen-cancel").get(0));
+		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-cancel").get(0));
 	}
 
 	OCTOPRINT_VIEWMODELS.push({
