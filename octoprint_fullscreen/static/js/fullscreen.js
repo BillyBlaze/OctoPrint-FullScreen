@@ -5,6 +5,12 @@
  * (Other stuff) Author: Paul de Vries
  * License: AGPLv3
  */
+var onceOpenInlineFullscreen = false;
+if (window.location.hash.indexOf('-fullscreen-open') !== -1) {
+	window.location.hash = window.location.hash.replace('-fullscreen-open', '').substr(1);
+	onceOpenInlineFullscreen = true;
+}
+
 $(function() {
 	function FullscreenViewModel(parameters) {
 		var self = this;
@@ -34,6 +40,16 @@ $(function() {
 			$fullscreenContainer.toggleFullScreen();
 		}
 
+		self.onStartupComplete = function() {
+			if (onceOpenInlineFullscreen) {
+				setTimeout(function() {
+					touchtime = new Date().getTime();
+					$webcam.trigger("click");
+					onceOpenInlineFullscreen = false;
+				}, 0);
+			}
+		}
+
 		self.onDataUpdaterPluginMessage = function (plugin, data) {
 			if (plugin.indexOf('DisplayLayerProgress') !== -1) {
 				if (!self.printer.hasLayerProgress()) {
@@ -57,15 +73,22 @@ $(function() {
 			return output;
 		};
 
-
 		var touchtime = 0;
 		$webcam.on("click", function() {
-			if (touchtime == 0) {
+			if (touchtime === 0) {
 				touchtime = new Date().getTime();
 			} else {
 				if (((new Date().getTime()) - touchtime) < 800) {
 					$body.toggleClass('inlineFullscreen');
 					$container.toggleClass("inline fullscreen");
+
+					if ($body.hasClass('inlineFullscreen')) {
+						history.pushState('', null, window.location.hash + '-fullscreen-open');
+					} else {
+						if (window.location.hash.indexOf('-fullscreen-open') !== -1) {
+							history.pushState('', null, window.location.hash.replace('-fullscreen-open', ''));
+						}
+					}
 
 					if(self.printer.isFullscreen()) {
 						$fullscreenContainer.toggleFullScreen();
@@ -78,15 +101,11 @@ $(function() {
 		});
 
 		$(document).bind("fullscreenchange", function() {
-			if (!$(document).fullScreen()) {
-				self.printer.isFullscreen(false);
-			} else {
-				self.printer.isFullscreen(true);
-			}
+			self.printer.isFullscreen($(document).fullScreen());
 		});
 
 		$info.insertAfter($container);
-		$(".print-control #job_pause").clone().appendTo(".user-buttons").attr('id', 'job_pause_clone');
+		$(".print-control #job_pause").clone().appendTo("#fullscreen-bar .user-buttons").attr('id', 'job_pause_clone');
 
 		ko.applyBindings(self.printer, $("#fullscreen-bar #fullscreen-cancel").get(0));
 	}
