@@ -33,13 +33,18 @@ $(function() {
 			var $webcam = $('#webcam_image');
 			var $info = $('#fullscreen-bar');
 	
-			var containerPlaceholder = document.getElementById('webcam') ? '#webcam' : '#webcam_container';
+			var containerPlaceholder = document.querySelector('#webcam,#webcam_container,#classicwebcam_container');
+			if (!containerPlaceholder) {
+				return;
+			}
+
+			var containerPlaceholderSelector = `#${containerPlaceholder.id}`;
 			if ($('.webcam_fixed_ratio').length > 0) {
-				$container = $(containerPlaceholder + ' .webcam_fixed_ratio');
-				$fullscreenContainer = $(containerPlaceholder + ' #webcam_rotator');
+				$container = $(containerPlaceholderSelector + ' .webcam_fixed_ratio');
+				$fullscreenContainer = $(containerPlaceholderSelector + ' #webcam_rotator');
 			} else {
-				$container = $(containerPlaceholder + ' #webcam_rotator');
-				$fullscreenContainer = $(containerPlaceholder + ' #webcam_container');
+				$container = $(containerPlaceholderSelector + ' #webcam_rotator');
+				$fullscreenContainer = $(containerPlaceholderSelector + ' #classicwebcam_container');
 			}
 
 			var touchtime = 0;
