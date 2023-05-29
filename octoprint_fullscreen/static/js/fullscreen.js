@@ -40,11 +40,11 @@ $(function() {
 
 			var containerPlaceholderSelector = `#${containerPlaceholder.id}`;
 			if ($('.webcam_fixed_ratio').length > 0) {
-				$container = $(containerPlaceholder + ' .webcam_fixed_ratio');
-				$fullscreenContainer = $(containerPlaceholder + ' #webcam_rotator');
+				$container = $(containerPlaceholderSelector + ' .webcam_fixed_ratio');
+				$fullscreenContainer = $(containerPlaceholderSelector + ' #webcam_rotator');
 			} else {
-				$container = $(containerPlaceholder + ' #webcam_rotator');
-				$fullscreenContainer = $(containerPlaceholder + ' #classicwebcam_container');
+				$container = $(containerPlaceholderSelector + ' #webcam_rotator');
+				$fullscreenContainer = $(containerPlaceholderSelector + ' #classicwebcam_container');
 			}
 
 			var touchtime = 0;
